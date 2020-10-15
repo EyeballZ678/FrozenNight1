@@ -92,4 +92,12 @@ public class Playerhealth : MonoBehaviour {
 		CurrentHealth = 0;
 		Debug.Log("Player Dead.");
 	}
+
+    void OnTriggerEnter(Collider other)
+	{
+		if (other.tag=="Snowclump")
+		{
+			maxTemperature = 0f;
+		}
+	}
 }

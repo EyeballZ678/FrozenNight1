@@ -11,9 +11,11 @@ public class Blizzard : MonoBehaviour
     public float timeUntilblizzard = 20f;
     public float blizzardDuration = 30f;
     public Animator door;
+    public GameObject snowClump;
     // Start is called before the first frame update
     void Start()
     {
+        snowClump.SetActive(false);//will turn of snow clump at start
         StartCoroutine(Sequence());
     }
 
@@ -29,6 +31,7 @@ public class Blizzard : MonoBehaviour
             yield return new WaitForSeconds(blizzardDuration);
             source.clip = snow;
             source.Play();
+            snowClump.SetActive(true);
         }
     }
 }
