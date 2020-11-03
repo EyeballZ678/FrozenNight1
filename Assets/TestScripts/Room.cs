@@ -7,7 +7,7 @@ public class Room : MonoBehaviour {
 
 	public Playerhealth Player;
 	public Fireplace fireplace;
-	public TextMeshProUGUI text;
+//	public TextMeshProUGUI text;
 	float currentTemperature;
 
 	void Start()

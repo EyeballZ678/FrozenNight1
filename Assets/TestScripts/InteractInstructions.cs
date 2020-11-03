@@ -11,9 +11,9 @@ public class InteractInstructions : MonoBehaviour {
     {
         uiObject.SetActive(false);
     }
-    void OnTriggerStay(Collider player)
+    void OnTriggerStay(Collider tree)
     {
-        if (player.gameObject.tag == "Player")
+        if (tree.gameObject.tag == "Tree")
         {
             if (uiObject != null)
             {

@@ -10,7 +10,7 @@ public class Blizzard : MonoBehaviour
     public AudioClip blizzard;
     public float timeUntilblizzard = 20f;
     public float blizzardDuration = 30f;
-    public Animator door;
+    public Door [] doors;
     public GameObject snowClump;
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,11 @@ public class Blizzard : MonoBehaviour
             yield return new WaitForSeconds(timeUntilblizzard);
             source.clip = blizzard;
             source.Play();
-            door.SetTrigger("Slam");
+            //          door.SetTrigger("Slam");
+            foreach (Door door in doors)
+            {
+                door.Slam();
+            }
             yield return new WaitForSeconds(blizzardDuration);
             source.clip = snow;
             source.Play();

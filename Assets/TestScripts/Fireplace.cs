@@ -11,6 +11,7 @@ public class Fireplace : MonoBehaviour {
 	public float rateToCool = -0.5f;
 	public float fireTemperature = 30.0f;
 	public float minTemperature = -2.0f;
+	public GameObject ClumpofSnow;
 
 	void OnTriggerStay(Collider player)
 	{
