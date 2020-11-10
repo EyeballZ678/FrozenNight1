@@ -100,4 +100,11 @@ public class Playerhealth : MonoBehaviour {
 			maxTemperature = 0f;
 		}
 	}
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.tag=="Snowclump")
+		{
+			maxTemperature = 30f;
+		}
+	}
 }

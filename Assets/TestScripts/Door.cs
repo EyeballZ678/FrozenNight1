@@ -15,9 +15,9 @@ public class Door : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Slam()
+    public void ForceOpen()
     {
-        Anim.SetTrigger("Slam");
+        Anim.SetTrigger("ForceOpen");
         Health = 1;
     }
 
@@ -31,8 +31,8 @@ public class Door : MonoBehaviour
             if (Health == 0)
             {
 
-                Anim.SetTrigger("ForceOpen");
-                Invoke("Slam", DoorOpenTime);
+                Anim.SetTrigger("Slam");
+                Invoke("ForceOpen", DoorOpenTime);
 //                Health += 1;
                 
             }

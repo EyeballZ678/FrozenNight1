@@ -30,7 +30,7 @@ public class Blizzard : MonoBehaviour
             //          door.SetTrigger("Slam");
             foreach (Door door in doors)
             {
-                door.Slam();
+                door.ForceOpen();
             }
             yield return new WaitForSeconds(blizzardDuration);
             source.clip = snow;

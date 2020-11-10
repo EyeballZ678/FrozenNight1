@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Room : MonoBehaviour {
 
@@ -12,13 +13,14 @@ public class Room : MonoBehaviour {
 
 	void Start()
 	{
-		currentTemperature = -2.0f;
+		currentTemperature = 0f;
 	}
     void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag("Player")) 
 		{
 			Player.enterRoom();
+			Player.GetComponent<FirstPersonController>().m_WalkSpeed = 5f;
 		}
 	}
 
@@ -27,7 +29,9 @@ public class Room : MonoBehaviour {
 		if (other.CompareTag("Player"))
 		{
 			Player.exitRoom();
+			Player.GetComponent<FirstPersonController>().m_WalkSpeed = 2.5f;
 		}
+
 	}
 
 	void OnTriggerStay(Collider collider)
