@@ -8,6 +8,7 @@ public class Room : MonoBehaviour {
 
 	public Playerhealth Player;
 	public Fireplace fireplace;
+//	public GameObject Theplayer;
 //	public TextMeshProUGUI text;
 	float currentTemperature;
 
@@ -20,7 +21,9 @@ public class Room : MonoBehaviour {
 		if (other.CompareTag("Player")) 
 		{
 			Player.enterRoom();
-			Player.GetComponent<FirstPersonController>().m_WalkSpeed = 5f;
+			Player.GetComponent<FirstPersonController>().Setspeed(5f);
+			Player.GetComponent<FirstPersonController>().m_UseShivering = false;
+
 		}
 	}
 
@@ -29,7 +32,9 @@ public class Room : MonoBehaviour {
 		if (other.CompareTag("Player"))
 		{
 			Player.exitRoom();
-			Player.GetComponent<FirstPersonController>().m_WalkSpeed = 2.5f;
+			Player.GetComponent<FirstPersonController>().Setspeed(2.5f);
+		    Player.GetComponent<FirstPersonController>().m_UseShivering = true;
+
 		}
 
 	}

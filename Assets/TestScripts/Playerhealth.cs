@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityStandardAssets.Characters.FirstPerson;
 
-public class Playerhealth : MonoBehaviour {
-    public float CurrentHealth;
-    public float MaxHealth;
+public class Playerhealth : MonoBehaviour
+{
+	public float CurrentHealth;
+	public float MaxHealth;
 	public float Temperature = 1.0f;
 	public Slider healthbar;
 	public float rateToWarm = 1.0f;
@@ -15,22 +17,22 @@ public class Playerhealth : MonoBehaviour {
 	public float minTemperature = -2.0f;
 	public TextMeshProUGUI text;
 	private int Inside = 0;
+	public GameObject Player;
 
 	// Use this for initialization
-	void Start () 
+	void Start()
 	{
 		MaxHealth = 20f;
 		// Resets health to what the current "MaxHealth" is set to whenever the game loads
 		CurrentHealth = MaxHealth;
-
 		healthbar.value = CalculateHealth();
 	}
 
-	void Update () 
+	void Update()
 	{
 		//if (Input.GetKeyDown(KeyCode.P)) 
 		//	HealDamage (6);
-		if (Inside==0) 
+		if (Inside == 0)
 		{
 			Temperature = minTemperature;
 		}
@@ -45,22 +47,22 @@ public class Playerhealth : MonoBehaviour {
 		text.text = string.Format("Temperature: {0:N0}", Temperature);
 
 	}
-	public void enterRoom() 
+	public void enterRoom()
 	{
 		Inside++;
 	}
-	public void exitRoom() 
+	public void exitRoom()
 	{
 		Inside--;
 	}
-	public void setTemperature(float roomTemperature) 
+	public void setTemperature(float roomTemperature)
 	{
 		if (roomTemperature < Temperature)
 		{
 			Temperature += Time.deltaTime * rateToCool;
 			//DealDamage(Time.deltaTime / 4.0f);
 		}
-		else 
+		else
 		{
 			Temperature += Time.deltaTime * rateToWarm;
 			//HealDamage(Time.deltaTime / 2.0f);
@@ -73,13 +75,13 @@ public class Playerhealth : MonoBehaviour {
 		CurrentHealth -= damageValue;
 		healthbar.value = CalculateHealth();
 		// if the player loses all health they will die
-		if (CurrentHealth <= 0) 
+		if (CurrentHealth <= 0)
 			Die();
 	}
 	public void HealDamage(float damageValue)
 	{
 		CurrentHealth += damageValue;
-		healthbar.value = CalculateHealth ();
+		healthbar.value = CalculateHealth();
 	}
 
 	float CalculateHealth()
@@ -93,18 +95,35 @@ public class Playerhealth : MonoBehaviour {
 		Debug.Log("Player Dead.");
 	}
 
-    void OnTriggerEnter(Collider other)
+	void OnTriggerEnter(Collider other)
 	{
-		if (other.tag=="Snowclump")
+		if (other.tag == "Snowclump")
 		{
 			maxTemperature = 0f;
+			Player.GetComponent<FirstPersonController>().Setspeed(2.5f);
+			Player.GetComponent<FirstPersonController>().m_UseShivering = true;
+
 		}
 	}
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.tag=="Snowclump")
+		if (other.tag == "Snowclump")
 		{
 			maxTemperature = 30f;
+			Player.GetComponent<FirstPersonController>().Setspeed(5f);
+			Player.GetComponent<FirstPersonController>().m_UseShivering = false;
 		}
 	}
+	public void PlayerShivers()
+	{
+		if (Temperature <= 0)
+		{
+			Player.GetComponent<FirstPersonController>().m_UseShivering = true;
+		}
+		if (Temperature >= 0)
+		{
+			Player.GetComponent<FirstPersonController>().m_UseShivering = false;
+		}
+	}
+
 }

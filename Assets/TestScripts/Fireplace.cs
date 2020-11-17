@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fireplace : MonoBehaviour {
 
-	float logsOnFire;
+	public float logsOnFire;
 	public InteractInstructions logs;
 	public float timePerLog = 60.0f;
 	public float rateToWarm = 1.0f;
@@ -12,6 +12,12 @@ public class Fireplace : MonoBehaviour {
 	public float fireTemperature = 30.0f;
 	public float minTemperature = -2.0f;
 	public GameObject ClumpofSnow;
+	public GameObject Firebox;
+
+	private void Start()
+	{
+
+	}
 
 	void OnTriggerStay(Collider player)
 	{
@@ -26,6 +32,7 @@ public class Fireplace : MonoBehaviour {
 
 	void Update()
 	{
+		fireBox();
 		if (logsOnFire > 0.0f) {
 			logsOnFire -= Time.deltaTime / timePerLog;
 		}
@@ -48,5 +55,16 @@ public class Fireplace : MonoBehaviour {
 	public void NoFire() 
 	{
 		logsOnFire = 0;
+	}
+	void fireBox()
+	{
+		if (logsOnFire >= 0.1f)
+		{
+			Firebox.SetActive(false);
+		}
+		else
+		{
+			Firebox.SetActive(true);
+		}
 	}
 }

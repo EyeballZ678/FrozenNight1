@@ -16,11 +16,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] [Range(0f, 1f)] private float m_RunstepLenghten;
         [SerializeField] private float m_JumpSpeed;
         [SerializeField] private float m_StickToGroundForce;
+        [SerializeField] public float m_Shiveramount;
         [SerializeField] private float m_GravityMultiplier;
         [SerializeField] private MouseLook m_MouseLook;
         [SerializeField] private bool m_UseFovKick;
         [SerializeField] private FOVKick m_FovKick = new FOVKick();
         [SerializeField] private bool m_UseHeadBob;
+        [SerializeField] public bool m_UseShivering;
         [SerializeField] private CurveControlledBob m_HeadBob = new CurveControlledBob();
         [SerializeField] private LerpControlledBob m_JumpBob = new LerpControlledBob();
         [SerializeField] private float m_StepInterval;
@@ -55,6 +57,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+        }
+        public void Setspeed(float Walkspeed)
+        {
+            m_WalkSpeed = Walkspeed;
+            m_RunSpeed = 2f * Walkspeed;
         }
 
 
@@ -194,8 +201,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
+                if (m_UseShivering)
+                {
+                    m_Camera.transform.localPosition = m_OriginalCameraPosition + new Vector3(Random.Range(-m_Shiveramount, m_Shiveramount), Random.Range(-m_Shiveramount, m_Shiveramount), 0.0f);
+                }
+                
                 newCameraPosition = m_Camera.transform.localPosition;
-                newCameraPosition.y = m_OriginalCameraPosition.y - m_JumpBob.Offset();
+                newCameraPosition.y = m_Camera.transform.localPosition.y - m_JumpBob.Offset();
             }
             m_Camera.transform.localPosition = newCameraPosition;
         }
