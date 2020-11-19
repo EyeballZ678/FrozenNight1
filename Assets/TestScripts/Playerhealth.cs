@@ -30,6 +30,9 @@ public class Playerhealth : MonoBehaviour
 
 	void Update()
 	{
+		enterRoom();
+		exitRoom();
+		PlayerShivers();
 		//if (Input.GetKeyDown(KeyCode.P)) 
 		//	HealDamage (6);
 		if (Inside == 0)
