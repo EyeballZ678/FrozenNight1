@@ -21,8 +21,8 @@ public class Room : MonoBehaviour {
 		if (other.CompareTag("Player")) 
 		{
 			Player.enterRoom();
-			Player.GetComponent<FirstPersonController>().Setspeed(5f);
-			Player.GetComponent<FirstPersonController>().m_UseShivering = false;
+//			Player.GetComponent<FirstPersonController>().Setspeed(5f);
+//			Player.GetComponent<FirstPersonController>().m_UseShivering = false;
 
 		}
 	}
@@ -32,8 +32,8 @@ public class Room : MonoBehaviour {
 		if (other.CompareTag("Player"))
 		{
 			Player.exitRoom();
-			Player.GetComponent<FirstPersonController>().Setspeed(2.5f);
-		    Player.GetComponent<FirstPersonController>().m_UseShivering = true;
+//			Player.GetComponent<FirstPersonController>().Setspeed(2.5f);
+//		    Player.GetComponent<FirstPersonController>().m_UseShivering = true;
 
 		}
 

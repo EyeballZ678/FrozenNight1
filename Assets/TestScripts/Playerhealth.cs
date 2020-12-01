@@ -14,9 +14,12 @@ public class Playerhealth : MonoBehaviour
 	public float rateToWarm = 1.0f;
 	public float rateToCool = -0.5f;
 	public float maxTemperature = 30.0f;
-	public float minTemperature = -2.0f;
+	public float minTemperature = -20.0f;
+	public Renderer iceFilter;
 	public TextMeshProUGUI text;
 	private int Inside = 0;
+	public float TempDamage = 0.0365f;
+	int snowClumps = 0;
 	public GameObject Player;
 
 	// Use this for initialization
@@ -37,17 +40,26 @@ public class Playerhealth : MonoBehaviour
 		//	HealDamage (6);
 		if (Inside == 0)
 		{
-			Temperature = minTemperature;
+			setTemperature(minTemperature);
 		}
 		if (Temperature < 0.0f)
 		{
-			DealDamage(Time.deltaTime / 4.0f);
+			DealDamage(-minTemperature * TempDamage * Time.deltaTime);
 		}
 		if (Temperature > 5.0f)
 		{
 			HealDamage(Time.deltaTime / 2.0f);
 		}
 		text.text = string.Format("Temperature: {0:N0}", Temperature);
+		if (Inside == 0 || snowClumps > 0)
+		{
+			Player.GetComponent<FirstPersonController>().Setspeed(2.5f);
+		}
+		else
+		{
+			Player.GetComponent<FirstPersonController>().Setspeed(5f);
+		}
+
 
 	}
 	public void enterRoom()
@@ -71,6 +83,10 @@ public class Playerhealth : MonoBehaviour
 			//HealDamage(Time.deltaTime / 2.0f);
 		}
 		Temperature = Mathf.Clamp(Temperature, minTemperature, maxTemperature);
+		Material material = iceFilter.material;
+		Color color = material.color;
+		color.a = Temperature / minTemperature;
+		material.color = color;
 	}
 	public void DealDamage(float damageValue)
 	{
@@ -102,9 +118,9 @@ public class Playerhealth : MonoBehaviour
 	{
 		if (other.tag == "Snowclump")
 		{
+			snowClumps++;
 			maxTemperature = 0f;
-			Player.GetComponent<FirstPersonController>().Setspeed(2.5f);
-			Player.GetComponent<FirstPersonController>().m_UseShivering = true;
+
 
 		}
 	}
@@ -112,9 +128,9 @@ public class Playerhealth : MonoBehaviour
 	{
 		if (other.tag == "Snowclump")
 		{
+			snowClumps--;
 			maxTemperature = 30f;
-			Player.GetComponent<FirstPersonController>().Setspeed(5f);
-			Player.GetComponent<FirstPersonController>().m_UseShivering = false;
+
 		}
 	}
 	public void PlayerShivers()
