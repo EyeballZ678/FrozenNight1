@@ -11,6 +11,9 @@ public class Door : MonoBehaviour
     public bool Colliding;
     public Fireplace fireplace;
     bool Blizzard;
+    public float MinimumDoorOpenTimer;
+    public float MaximumDoorOpenTimer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +36,7 @@ public class Door : MonoBehaviour
                     Debug.Log("Close");
                     if (Blizzard)
                     {
-                        Invoke("ForceOpen", DoorCloseTime);
+                        Invoke("ForceOpen", Random.Range(MinimumDoorOpenTimer,MaximumDoorOpenTimer ));
                     }
                 }
                 else

@@ -40,11 +40,15 @@ public class Playerhealth : MonoBehaviour
 		//	HealDamage (6);
 		if (Inside == 0)
 		{
+			if (Temperature > -2f)
+			{
+				Temperature = -2f;
+			}	
 			setTemperature(minTemperature);
 		}
 		if (Temperature < 0.0f)
 		{
-			DealDamage(-minTemperature * TempDamage * Time.deltaTime);
+			DealDamage(-Temperature * TempDamage * Time.deltaTime);
 		}
 		if (Temperature > 5.0f)
 		{
@@ -129,7 +133,7 @@ public class Playerhealth : MonoBehaviour
 		if (other.tag == "Snowclump")
 		{
 			snowClumps--;
-			maxTemperature = 30f;
+			maxTemperature = 3f;
 
 		}
 	}
