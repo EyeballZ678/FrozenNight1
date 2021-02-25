@@ -13,6 +13,7 @@ public class Door : MonoBehaviour
     bool Blizzard;
     public float MinimumDoorOpenTimer;
     public float MaximumDoorOpenTimer;
+    bool cantOpen = false;
 
 
     // Start is called before the first frame update
@@ -23,6 +24,15 @@ public class Door : MonoBehaviour
 
     void Update()
     {
+
+        if (Colliding && Input.GetKey(KeyCode.H))
+        {
+            cantOpen = true;
+        }
+        if (Input.GetKeyUp(KeyCode.H))
+        {
+            cantOpen = false;
+        }
         if (Colliding && Input.GetKeyDown(KeyCode.F))
         {
 
@@ -41,9 +51,13 @@ public class Door : MonoBehaviour
                 }
                 else
                 {
-                    Anim.SetTrigger("ForceOpen");
-                    fireplace.NoFire();
-                    Debug.Log("open");
+                    if (!cantOpen)
+                    {
+                        Anim.SetTrigger("ForceOpen");
+                        fireplace.NoFire();
+                        Debug.Log("open");
+                    }
+
                 }
 
                 //               Invoke("ForceOpen", DoorOpenTime);
@@ -56,7 +70,8 @@ public class Door : MonoBehaviour
     public void SetBlizzard(bool enable)
     {
         Blizzard = enable;
-        if (Blizzard)
+        print("FromBlizzard "+ cantOpen);
+        if (Blizzard && !cantOpen)
         {
             ForceOpen();
         }
@@ -65,9 +80,13 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     public void ForceOpen()
     {
-        Anim.SetTrigger("ForceOpen");
-        Health = 1;
-        fireplace.NoFire();
+        if (!cantOpen)
+        {
+            Anim.SetTrigger("ForceOpen");
+            Health = 1;
+            fireplace.NoFire();
+        }
+       
     }
 
     private void OnCollisionEnter(Collision other)
@@ -84,7 +103,13 @@ public class Door : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Colliding = false;
+            cantOpen = false;
         }
+    }
+
+    private bool Doorheld()
+    {
+        return cantOpen;
     }
 
 }

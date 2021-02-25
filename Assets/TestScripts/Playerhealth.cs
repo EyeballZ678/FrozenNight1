@@ -115,7 +115,7 @@ public class Playerhealth : MonoBehaviour
 	void Die()
 	{
 		CurrentHealth = 0;
-		Debug.Log("Player Dead.");
+	//	Debug.Log("Player Dead.");
 	}
 
 	void OnTriggerEnter(Collider other)
